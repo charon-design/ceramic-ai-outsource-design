@@ -2,35 +2,712 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>醴陵陶瓷AI文创外包下单平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>醴陵陶瓷AI文创 · 茶具套装预览</title>
+    <!-- Font Awesome 6 (免费图标) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:Microsoft Yahei;}
-        .container{width:1200px;margin:30px auto;}
-        h1{text-align:center;color:#9c2c20;margin-bottom:30px;}
-        .box{display:flex;gap:40px;}
-        .left{width:50%;}
-        .right{width:50%;border:1px solid #ddd;padding:20px;min-height:400px;}
-        textarea,input{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:4px;}
-        button{background:#9c2c20;color:white;border:none;padding:12px 30px;border-radius:4px;cursor:pointer;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "PingFang SC", system-ui, sans-serif;
+        }
+
+        body {
+            background: #faf7f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 0;
+        }
+
+        .container {
+            width: 1200px;
+            max-width: 96%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            padding: 40px 35px 50px;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            text-align: center;
+            color: #a8221a;
+            font-weight: 600;
+            font-size: 30px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1::after {
+            content: "· 釉下五彩 · 茶具套装";
+            font-size: 18px;
+            font-weight: 400;
+            color: #7a5a4a;
+            letter-spacing: 1px;
+        }
+
+        .content-box {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .left-submit {
+            flex: 1 1 45%;
+            min-width: 300px;
+            background: #fefcf9;
+            padding: 25px 25px 30px;
+            border-radius: 24px;
+            border: 1px solid #ece6df;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .right-preview {
+            flex: 1 1 45%;
+            min-width: 300px;
+            background: #fcf9f5;
+            border: 1px solid #e5ddd4;
+            border-radius: 24px;
+            padding: 25px 25px 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 18px -8px rgba(90, 60, 40, 0.08);
+            transition: 0.2s;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3e2e24;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e3d6cb;
+            padding-bottom: 12px;
+        }
+
+        h3 i {
+            color: #a8221a;
+            font-size: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 8px 0 16px 0;
+            border: 1px solid #d9cec3;
+            border-radius: 18px;
+            font-size: 15px;
+            background: #ffffff;
+            resize: vertical;
+            transition: 0.2s;
+            color: #2c241e;
+            line-height: 1.6;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
+        }
+
+        textarea:focus {
+            border-color: #a8221a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(168, 34, 26, 0.12);
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 14px 12px;
+            margin: 8px 0 18px 0;
+            border: 1px dashed #b8aa9c;
+            border-radius: 18px;
+            background: #fbf8f3;
+            font-size: 14px;
+            color: #4d3e33;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        input[type="file"]:hover {
+            border-color: #a8221a;
+            background: #f9f2eb;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: #e8ddd2;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #3b2b20;
+            margin-right: 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: #d6c6b8;
+            color: #1f150e;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0 6px;
+        }
+
+        button {
+            background-color: #a8221a;
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(168, 34, 26, 0.2);
+            flex: 1 1 auto;
+            min-width: 170px;
+            letter-spacing: 0.6px;
+        }
+
+        button i {
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #8c1b14;
+            transform: scale(0.97);
+            box-shadow: 0 6px 12px rgba(168, 34, 26, 0.25);
+        }
+
+        button:active {
+            transform: scale(0.94);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #a8221a;
+            border: 2px solid #a8221a;
+            box-shadow: none;
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            background: #a8221a;
+            color: #fff;
+        }
+
+        .right-preview h3 {
+            border-bottom-color: #cdb9ab;
+        }
+
+        .preview-placeholder {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 240px;
+            background: #f4eee8;
+            border-radius: 28px;
+            margin-top: 8px;
+            padding: 25px 20px;
+            border: 1px solid #e6dbd1;
+            box-shadow: inset 0 2px 6px rgba(80, 50, 30, 0.04);
+            transition: 0.25s;
+        }
+
+        .preview-placeholder i {
+            font-size: 52px;
+            color: #c6b3a3;
+            margin-bottom: 18px;
+            opacity: 0.6;
+        }
+
+        .preview-placeholder p {
+            color: #6f5b4b;
+            font-size: 16px;
+            text-align: center;
+            line-height: 1.7;
+            max-width: 240px;
+        }
+
+        .preview-placeholder .highlight {
+            color: #a8221a;
+            font-weight: 500;
+        }
+
+        .preview-image-area {
+            display: none;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-top: 8px;
+            background: #efe7df;
+            padding: 8px;
+        }
+
+        .preview-image-area img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 1px solid #d8cbbc;
+        }
+
+        .badge-tag {
+            background: #e3d6cb;
+            color: #3f2d1f;
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-size: 13px;
+            display: inline-block;
+            margin-right: 6px;
+            letter-spacing: 0.4px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            font-size: 14px;
+            color: #917b6b;
+            text-align: center;
+            border-top: 1px solid #e2d7cd;
+            padding-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-note i {
+            margin-right: 6px;
+            color: #a06957;
+        }
+
+        @media (max-width: 780px) {
+            .container { padding: 25px 16px; }
+            h1 { font-size: 24px; flex-direction: column; gap: 4px; }
+            h1::after { font-size: 16px; }
+            .left-submit, .right-preview { flex: 1 1 100%; }
+        }
+
+        /* 茶具标签装饰 */
+        .tea-badge {
+            background: #dacfc4;
+            color: #3b2b1f;
+            border-radius: 40px;
+            padding: 4px 16px;
+            font-size: 13px;
+            display: inline-block;
+            margin: 4px 4px 0 0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>醴陵釉下彩陶瓷文创外包设计下单系统</h1>
-        <div class="box">
-            <div class="left">
-                <h3>客户需求提交区</h3>
-                <textarea placeholder="输入纹样需求：山水花鸟/古风人物/传统祥云等醴陵瓷风格" rows="5"></textarea>
-                <input type="file" accept="jpg,png">
-                <button>AI生成陶瓷纹样初稿</button>
-                <br><br>
-                <button>导出印刷CMYK商用成品图</button>
+<div class="container">
+    <h1>
+        <i class="fas fa-mug-hot" style="color: #a8221a;"></i> 
+        醴陵陶瓷AI文创 · 茶具套装定制
+    </h1>
+
+    <div class="content-box">
+        <!-- 左侧提交区 -->
+        <div class="left-submit">
+            <h3>
+                <i class="fas fa-pen-fancy"></i> 茶具纹样需求
+            </h3>
+            <label for="designPrompt" style="font-weight:500; color:#3f2e22; font-size:15px; display:block; margin-top:6px;">
+                <i class="fas fa-comment-dots" style="color:#a8221a; margin-right:6px;"></i>描述您想要的茶具纹样
+            </label>
+            <textarea id="designPrompt" rows="5" placeholder="例如：青花缠枝牡丹茶具套装，釉下五彩，壶身与茶杯纹样呼应，传统祥云点缀"></textarea>
+
+            <label for="fileUpload" style="font-weight:500; color:#3f2e22; font-size:15px; display:block; margin-top:4px;">
+                <i class="fas fa-image" style="color:#a8221a; margin-right:6px;"></i>参考图 (可选)
+            </label>
+            <input type="file" id="fileUpload" accept=".jpg,.jpeg,.png">
+
+            <div class="button-group">
+                <button id="generateBtn">
+                    <i class="fas fa-wand-magic-sparkles"></i> AI生成茶具套装预览
+                </button>
+                <button id="exportBtn" class="btn-outline">
+                    <i class="fas fa-file-export"></i> 导出CMYK商用图
+                </button>
             </div>
-            <div class="right">
-                <h3>AI纹样预览区</h3>
-                <p style="margin-top:20px;color:#888;">生成后的陶瓷纹样、包装效果图展示在此处</p>
+
+            <!-- 快速标签 -->
+            <div style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge-tag"><i class="fas fa-mug-saucer"></i> 茶壶</span>
+                <span class="badge-tag"><i class="fas fa-wine-glass"></i> 茶杯</span>
+                <span class="badge-tag"><i class="fas fa-leaf"></i> 祥云</span>
+                <span class="badge-tag"><i class="fas fa-tree"></i> 山水</span>
+                <span class="badge-tag"><i class="fas fa-feather"></i> 花鸟</span>
+            </div>
+            <p style="font-size:13px; color:#907b6b; margin-top: 16px;">
+                <i class="fas fa-info-circle"></i> 根据文字描述生成茶具套装效果，AI将纹样适配到壶、杯、托盘。
+            </p>
+        </div>
+
+        <!-- 右侧预览区 -->
+        <div class="right-preview">
+            <h3>
+                <i class="fas fa-eye"></i> 茶具套装 · AI成品预览
+            </h3>
+            <div id="placeholderBox" class="preview-placeholder">
+                <i class="fas fa-mug-hot"></i>
+                <p>
+                    <span class="highlight">AI 茶具生成预览</span><br>
+                    茶壶、茶杯、托盘<br>纹样效果将在此展示
+                </p>
+                <div style="margin-top: 18px; display: flex; gap: 10px; font-size: 12px; color: #9b897b;">
+                    <span><i class="fas fa-check-circle" style="color:#4f7a4a;"></i> 釉下五彩</span>
+                    <span><i class="fas fa-palette"></i> 茶具套装</span>
+                </div>
+            </div>
+            <div id="imagePreviewBox" class="preview-image-area">
+                <img id="previewImage" src="" alt="AI生成茶具套装预览">
+                <div style="display: flex; justify-content: space-between; margin-top: 14px; padding: 0 6px;">
+                    <span style="font-size: 14px; color: #3d2c1f;"><i class="fas fa-tag"></i> 茶具 · AI生成</span>
+                    <span style="font-size: 14px; color: #a8221a; background: #f3eae3; padding: 2px 14px; border-radius: 30px;">✨ 套装预览</span>
+                </div>
+            </div>
+            <div style="margin-top: auto; padding-top: 18px; font-size: 14px; color: #7b695a; border-top: 1px dashed #d6c9bd; display: flex; gap: 16px; flex-wrap: wrap;">
+                <span><i class="far fa-clock"></i> 生成 ≈ 8s</span>
+                <span><i class="fas fa-print"></i> CMYK / 300dpi</span>
+                <span><i class="fas fa-vector-square"></i> 茶具适配</span>
             </div>
         </div>
     </div>
+
+    <div class="footer-note">
+        <span><i class="fas fa-copyright"></i> 醴陵 · 釉下彩茶具文创</span>
+        <span><i class="fas fa-certificate"></i> AI 辅助设计</span>
+        <span><i class="fas fa-mug-hot"></i> 茶具套装专项</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const generateBtn = document.getElementById('generateBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const fileInput = document.getElementById('fileUpload');
+        const promptText = document.getElementById('designPrompt');
+        const placeholderBox = document.getElementById('placeholderBox');
+        const imagePreviewBox = document.getElementById('imagePreviewBox');
+        const previewImg = document.getElementById('previewImage');
+
+        /**
+         * 核心：根据描述生成「茶具套装」风格的纹样预览
+         * 在画面中绘制茶壶、茶杯、托盘，并将纹样应用在上面
+         */
+        function generateTeaSetImage(seedText, fileName = '') {
+            const canvas = document.createElement('canvas');
+            canvas.width = 700;
+            canvas.height = 500;
+            const ctx = canvas.getContext('2d');
+
+            // 1. 生成种子 (结合文本+文件名)
+            const combined = seedText + '|' + fileName;
+            let hash = 0;
+            for (let i = 0; i < combined.length; i++) {
+                const char = combined.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            const seed = Math.abs(hash) / 2147483647; // 0~1
+
+            // 2. 基础色调 (随seed变化)
+            const hueBase = (seed * 360) % 360;
+            // 主色系 (茶具釉色)
+            const mainColor = `hsl(${hueBase}, 55%, 50%)`;
+            const accentColor = `hsl(${(hueBase + 40) % 360}, 50%, 60%)`;
+            const lightColor = `hsl(${(hueBase + 20) % 360}, 40%, 75%)`;
+            const darkColor = `hsl(${(hueBase + 60) % 360}, 45%, 35%)`;
+            const colors = [mainColor, accentColor, lightColor, darkColor, '#a8221a', '#b56b3a', '#2d6b4c', '#3a5f8a'];
+
+            // 3. 背景 (仿釉下质感)
+            const grad = ctx.createRadialGradient(
+                120 + seed * 200, 100 + seed * 150, 40,
+                350 + seed * 100, 250 + seed * 80, 450
+            );
+            const bgLight = `hsl(${40 + seed * 20}, 18%, ${88 + seed * 6}%)`;
+            const bgMid = `hsl(${35 + seed * 15}, 15%, ${75 + seed * 8}%)`;
+            const bgDark = `hsl(${30 + seed * 10}, 12%, ${60 + seed * 10}%)`;
+            grad.addColorStop(0, bgLight);
+            grad.addColorStop(0.6, bgMid);
+            grad.addColorStop(1, bgDark);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 4. 绘制茶具套装 (茶壶、茶杯、托盘)
+            ctx.save();
+            ctx.shadowColor = 'rgba(40, 25, 15, 0.25)';
+            ctx.shadowBlur = 12;
+
+            // ---- 托盘 (大椭圆) ----
+            ctx.beginPath();
+            ctx.ellipse(350, 380, 250, 70, 0, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${(hueBase + 10) % 360}, 25%, 70%)`;
+            ctx.globalAlpha = 0.3;
+            ctx.fill();
+            ctx.strokeStyle = `hsl(${(hueBase + 10) % 360}, 30%, 50%)`;
+            ctx.lineWidth = 3;
+            ctx.globalAlpha = 0.4;
+            ctx.stroke();
+            // 托盘内部纹样 (装饰)
+            ctx.globalAlpha = 0.25;
+            ctx.beginPath();
+            ctx.ellipse(350, 380, 200, 40, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `hsl(${(hueBase + 80) % 360}, 40%, 45%)`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // ---- 茶壶 (主体) ----
+            ctx.shadowBlur = 14;
+            ctx.globalAlpha = 0.9;
+            // 壶身 (大圆)
+            ctx.beginPath();
+            ctx.ellipse(280, 280, 110, 90, 0.05, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${(hueBase + 20) % 360}, 30%, 75%)`;
+            ctx.fill();
+            ctx.strokeStyle = `hsl(${(hueBase + 20) % 360}, 40%, 40%)`;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // 壶盖
+            ctx.beginPath();
+            ctx.ellipse(280, 195, 40, 18, 0, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${(hueBase + 30) % 360}, 25%, 70%)`;
+            ctx.fill();
+            ctx.stroke();
+
+            // 壶嘴
+            ctx.beginPath();
+            ctx.moveTo(370, 250);
+            ctx.quadraticCurveTo(420, 220, 430, 180);
+            ctx.lineWidth = 18;
+            ctx.strokeStyle = `hsl(${(hueBase + 20) % 360}, 30%, 70%)`;
+            ctx.stroke();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = `hsl(${(hueBase + 20) % 360}, 40%, 40%)`;
+            ctx.stroke();
+
+            // 壶柄
+            ctx.beginPath();
+            ctx.ellipse(170, 260, 30, 50, -0.2, 0, Math.PI * 1.8);
+            ctx.lineWidth = 16;
+            ctx.strokeStyle = `hsl(${(hueBase + 20) % 360}, 30%, 68%)`;
+            ctx.stroke();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = `hsl(${(hueBase + 20) % 360}, 40%, 40%)`;
+            ctx.stroke();
+
+            // ---- 茶杯 (两个) ----
+            // 左杯
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.ellipse(150, 350, 40, 30, 0, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${(hueBase + 40) % 360}, 30%, 78%)`;
+            ctx.fill();
+            ctx.strokeStyle = `hsl(${(hueBase + 40) % 360}, 40%, 40%)`;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+            // 杯耳
+            ctx.beginPath();
+            ctx.ellipse(110, 340, 12, 20, 0.2, 0, Math.PI * 1.6);
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = `hsl(${(hueBase + 40) % 360}, 30%, 72%)`;
+            ctx.stroke();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = `hsl(${(hueBase + 40) % 360}, 40%, 40%)`;
+            ctx.stroke();
+
+            // 右杯
+            ctx.beginPath();
+            ctx.ellipse(500, 340, 40, 30, -0.1, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${(hueBase + 50) % 360}, 30%, 78%)`;
+            ctx.fill();
+            ctx.strokeStyle = `hsl(${(hueBase + 50) % 360}, 40%, 40%)`;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.ellipse(540, 330, 12, 20, -0.2, 0, Math.PI * 1.6);
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = `hsl(${(hueBase + 50) % 360}, 30%, 72%)`;
+            ctx.stroke();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = `hsl(${(hueBase + 50) % 360}, 40%, 40%)`;
+            ctx.stroke();
+
+            // ---- 在茶具表面绘制纹样 (根据seed和描述) ----
+            ctx.restore();
+            ctx.save();
+            ctx.shadowBlur = 0; // 纹样清晰
+
+            // 在壶身绘制纹样 (用旋转的花卉/祥云)
+            const patternCount = 6 + Math.floor(seed * 10);
+            const radius = 60 + seed * 30;
+            // 壶身中心
+            const cx = 280, cy = 280;
+
+            for (let i = 0; i < patternCount; i++) {
+                ctx.save();
+                const angle = (i / patternCount) * Math.PI * 2 + seed * 0.5;
+                const r = radius + Math.sin(seed * 15 + i * 1.2) * 15;
+                const x = cx + Math.cos(angle) * r;
+                const y = cy + Math.sin(angle) * r * 0.7; // 压扁适配壶身
+                ctx.translate(x, y);
+                ctx.rotate(angle + seed * 0.6 + i * 0.2);
+
+                const w = 18 + Math.sin(seed * 12 + i * 0.9) * 8;
+                const h = 12 + Math.cos(seed * 10 + i * 1.1) * 6;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, w, h, 0, 0, Math.PI * 2);
+                const colorIdx = Math.floor((i + seed * 3) % colors.length);
+                ctx.fillStyle = colors[colorIdx];
+                ctx.globalAlpha = 0.5 + Math.sin(seed * 4 + i) * 0.25;
+                ctx.fill();
+                ctx.strokeStyle = `hsl(${(hueBase + i * 30) % 360}, 50%, 30%)`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // 花蕊
+                ctx.beginPath();
+                ctx.arc(4 + Math.sin(i) * 4, -3 + Math.cos(i) * 4, 3 + Math.sin(seed * 10 + i) * 2, 0, Math.PI * 2);
+                ctx.fillStyle = '#f5e3c1';
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // 在茶杯上添加小纹样 (左杯)
+            for (let i = 0; i < 4; i++) {
+                ctx.save();
+                const angle = i * 1.2 + seed;
+                const r = 22;
+                const x = 150 + Math.cos(angle) * r;
+                const y = 350 + Math.sin(angle) * r * 0.7;
+                ctx.translate(x, y);
+                ctx.rotate(angle + seed);
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 10 + Math.sin(i) * 4, 6 + Math.cos(i) * 3, 0, 0, Math.PI * 2);
+                ctx.fillStyle = colors[(i + 2) % colors.length];
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+                ctx.restore();
+            }
+            // 右杯
+            for (let i = 0; i < 4; i++) {
+                ctx.save();
+                const angle = i * 1.2 + seed + 1.5;
+                const r = 22;
+                const x = 500 + Math.cos(angle) * r;
+                const y = 340 + Math.sin(angle) * r * 0.7;
+                ctx.translate(x, y);
+                ctx.rotate(angle + seed + 0.5);
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 10 + Math.cos(i) * 4, 6 + Math.sin(i) * 3, 0, 0, Math.PI * 2);
+                ctx.fillStyle = colors[(i + 3) % colors.length];
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // 添加文字水印 (显示描述关键词)
+            ctx.restore();
+            ctx.save();
+            ctx.globalAlpha = 0.15;
+            ctx.font = '18px "Microsoft Yahei", sans-serif';
+            ctx.fillStyle = `hsl(${(hueBase + 160) % 360}, 30%, 30%)`;
+            const shortTag = seedText.trim().slice(0, 8) || '茶具套装';
+            ctx.fillText('· ' + shortTag + ' ·', 500, 470);
+            ctx.globalAlpha = 0.1;
+            ctx.fillText('AI 文创 醴陵 釉下彩', 510, 490);
+            ctx.restore();
+
+            // 返回图片数据
+            return canvas.toDataURL('image/png');
+        }
+
+        // 展示图片
+        function showGeneratedImage(seedText, fileName) {
+            const dataUrl = generateTeaSetImage(seedText, fileName);
+            previewImg.src = dataUrl;
+            placeholderBox.style.display = 'none';
+            imagePreviewBox.style.display = 'block';
+        }
+
+        function resetToPlaceholder() {
+            placeholderBox.style.display = 'flex';
+            imagePreviewBox.style.display = 'none';
+        }
+
+        // ----- 事件绑定 -----
+        generateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const prompt = promptText.value.trim() || '传统祥云牡丹茶具';
+            const file = fileInput.files[0];
+            const fileName = file ? file.name : '';
+
+            const originalText = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 生成茶具套装...';
+            generateBtn.disabled = true;
+
+            setTimeout(() => {
+                showGeneratedImage(prompt, fileName);
+                generateBtn.innerHTML = originalText;
+                generateBtn.disabled = false;
+            }, 700);
+        });
+
+        // 导出
+        exportBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (imagePreviewBox.style.display === 'block' && previewImg.src) {
+                const link = document.createElement('a');
+                link.download = `醴陵茶具套装_AI设计_${new Date().getTime()}.jpg`;
+                link.href = previewImg.src;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                alert('✅ 茶具套装商用级图片已导出 (模拟JPG)');
+            } else {
+                alert('请先点击 "AI生成茶具套装预览" 生成效果图。');
+            }
+        });
+
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                console.log(`参考图: ${this.files[0].name}`);
+            }
+        });
+
+        // 双击重置
+        document.querySelector('.right-preview').addEventListener('dblclick', function(e) {
+            if (e.target.closest('.right-preview')) {
+                resetToPlaceholder();
+            }
+        });
+
+        resetToPlaceholder();
+        console.log('茶具套装AI生成器已加载 — 根据描述生成差异化茶具纹样预览');
+    })();
+</script>
 </body>
 </html>
